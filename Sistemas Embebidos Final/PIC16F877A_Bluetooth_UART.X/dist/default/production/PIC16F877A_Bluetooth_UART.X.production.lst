@@ -1,0 +1,707 @@
+
+
+Microchip MPLAB XC8 Assembler V3.00 build 20241204225717 
+                                                                                               Fri Aug 08 17:34:00 2025
+
+Microchip MPLAB XC8 C Compiler v3.00 (Free license) build 20241204225717 Og1 
+     1                           	processor	16F877A
+     2                           	pagewidth 120
+     3                           	opt	flic
+     4                           	psect	cinit,global,class=CODE,space=0,merge=1,delta=2
+     5                           	psect	bssCOMMON,global,class=COMMON,space=1,delta=1,noexec
+     6                           	psect	cstackCOMMON,global,class=COMMON,space=1,delta=1,noexec
+     7                           	psect	maintext,global,class=CODE,space=0,split=1,delta=2
+     8                           	psect	text1,local,class=CODE,space=0,merge=1,delta=2
+     9                           	psect	text2,local,class=CODE,space=0,merge=1,delta=2
+    10                           	psect	intentry,global,class=CODE,space=0,delta=2
+    11                           	psect	config,global,abs,ovrld,class=CONFIG,space=4,delta=2,noexec
+    12                           	dabs	1,0x7E,2
+    13     0000                     
+    14                           ; Generated 12/10/2023 GMT
+    15                           ; 
+    16                           ; Copyright © 2023, Microchip Technology Inc. and its subsidiaries ("Microchip")
+    17                           ; All rights reserved.
+    18                           ; 
+    19                           ; This software is developed by Microchip Technology Inc. and its subsidiaries ("Microch
+      +                          ip").
+    20                           ; 
+    21                           ; Redistribution and use in source and binary forms, with or without modification, are
+    22                           ; permitted provided that the following conditions are met:
+    23                           ; 
+    24                           ;     1. Redistributions of source code must retain the above copyright notice, this lis
+      +                          t of
+    25                           ;        conditions and the following disclaimer.
+    26                           ; 
+    27                           ;     2. Redistributions in binary form must reproduce the above copyright notice, this 
+      +                          list
+    28                           ;        of conditions and the following disclaimer in the documentation and/or other
+    29                           ;        materials provided with the distribution. Publication is not required when
+    30                           ;        this file is used in an embedded application.
+    31                           ; 
+    32                           ;     3. Microchip's name may not be used to endorse or promote products derived from th
+      +                          is
+    33                           ;        software without specific prior written permission.
+    34                           ; 
+    35                           ; THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+    36                           ; INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS F
+      +                          OR
+    37                           ; PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL MICROCHIP BE LIABLE FOR ANY DIRECT, INDIREC
+      +                          T,
+    38                           ; INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING BUT NOT LIMITED TO
+    39                           ; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA OR PROFITS; OR BUSINESS
+    40                           ; INTERRUPTION) HOWSOEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, ST
+      +                          RICT
+    41                           ; LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE U
+      +                          SE OF
+    42                           ; THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    43                           ; 
+    44                           ; 
+    45                           ; Code-generator required, PIC16F877A Definitions
+    46                           ; 
+    47                           ; SFR Addresses
+    48     0004                     fsr             equ	4
+    49     0004                     fsr0            equ	4
+    50     0000                     indf            equ	0
+    51     0000                     indf0           equ	0
+    52     0002                     pc              equ	2
+    53     0002                     pcl             equ	2
+    54     000A                     pclath          equ	10
+    55     0003                     status          equ	3
+    56     0000                     INDF            equ	0	;# 
+    57     0001                     TMR0            equ	1	;# 
+    58     0002                     PCL             equ	2	;# 
+    59     0003                     STATUS          equ	3	;# 
+    60     0004                     FSR             equ	4	;# 
+    61     0005                     PORTA           equ	5	;# 
+    62     0006                     PORTB           equ	6	;# 
+    63     0007                     PORTC           equ	7	;# 
+    64     0008                     PORTD           equ	8	;# 
+    65     0009                     PORTE           equ	9	;# 
+    66     000A                     PCLATH          equ	10	;# 
+    67     000B                     INTCON          equ	11	;# 
+    68     000C                     PIR1            equ	12	;# 
+    69     000D                     PIR2            equ	13	;# 
+    70     000E                     TMR1            equ	14	;# 
+    71     000E                     TMR1L           equ	14	;# 
+    72     000F                     TMR1H           equ	15	;# 
+    73     0010                     T1CON           equ	16	;# 
+    74     0011                     TMR2            equ	17	;# 
+    75     0012                     T2CON           equ	18	;# 
+    76     0013                     SSPBUF          equ	19	;# 
+    77     0014                     SSPCON          equ	20	;# 
+    78     0015                     CCPR1           equ	21	;# 
+    79     0015                     CCPR1L          equ	21	;# 
+    80     0016                     CCPR1H          equ	22	;# 
+    81     0017                     CCP1CON         equ	23	;# 
+    82     0018                     RCSTA           equ	24	;# 
+    83     0019                     TXREG           equ	25	;# 
+    84     001A                     RCREG           equ	26	;# 
+    85     001B                     CCPR2           equ	27	;# 
+    86     001B                     CCPR2L          equ	27	;# 
+    87     001C                     CCPR2H          equ	28	;# 
+    88     001D                     CCP2CON         equ	29	;# 
+    89     001E                     ADRESH          equ	30	;# 
+    90     001F                     ADCON0          equ	31	;# 
+    91     0081                     OPTION_REG      equ	129	;# 
+    92     0085                     TRISA           equ	133	;# 
+    93     0086                     TRISB           equ	134	;# 
+    94     0087                     TRISC           equ	135	;# 
+    95     0088                     TRISD           equ	136	;# 
+    96     0089                     TRISE           equ	137	;# 
+    97     008C                     PIE1            equ	140	;# 
+    98     008D                     PIE2            equ	141	;# 
+    99     008E                     PCON            equ	142	;# 
+   100     0091                     SSPCON2         equ	145	;# 
+   101     0092                     PR2             equ	146	;# 
+   102     0093                     SSPADD          equ	147	;# 
+   103     0094                     SSPSTAT         equ	148	;# 
+   104     0098                     TXSTA           equ	152	;# 
+   105     0099                     SPBRG           equ	153	;# 
+   106     009C                     CMCON           equ	156	;# 
+   107     009D                     CVRCON          equ	157	;# 
+   108     009E                     ADRESL          equ	158	;# 
+   109     009F                     ADCON1          equ	159	;# 
+   110     010C                     EEDATA          equ	268	;# 
+   111     010D                     EEADR           equ	269	;# 
+   112     010E                     EEDATH          equ	270	;# 
+   113     010F                     EEADRH          equ	271	;# 
+   114     018C                     EECON1          equ	396	;# 
+   115     018D                     EECON2          equ	397	;# 
+   116     0000                     INDF            equ	0	;# 
+   117     0001                     TMR0            equ	1	;# 
+   118     0002                     PCL             equ	2	;# 
+   119     0003                     STATUS          equ	3	;# 
+   120     0004                     FSR             equ	4	;# 
+   121     0005                     PORTA           equ	5	;# 
+   122     0006                     PORTB           equ	6	;# 
+   123     0007                     PORTC           equ	7	;# 
+   124     0008                     PORTD           equ	8	;# 
+   125     0009                     PORTE           equ	9	;# 
+   126     000A                     PCLATH          equ	10	;# 
+   127     000B                     INTCON          equ	11	;# 
+   128     000C                     PIR1            equ	12	;# 
+   129     000D                     PIR2            equ	13	;# 
+   130     000E                     TMR1            equ	14	;# 
+   131     000E                     TMR1L           equ	14	;# 
+   132     000F                     TMR1H           equ	15	;# 
+   133     0010                     T1CON           equ	16	;# 
+   134     0011                     TMR2            equ	17	;# 
+   135     0012                     T2CON           equ	18	;# 
+   136     0013                     SSPBUF          equ	19	;# 
+   137     0014                     SSPCON          equ	20	;# 
+   138     0015                     CCPR1           equ	21	;# 
+   139     0015                     CCPR1L          equ	21	;# 
+   140     0016                     CCPR1H          equ	22	;# 
+   141     0017                     CCP1CON         equ	23	;# 
+   142     0018                     RCSTA           equ	24	;# 
+   143     0019                     TXREG           equ	25	;# 
+   144     001A                     RCREG           equ	26	;# 
+   145     001B                     CCPR2           equ	27	;# 
+   146     001B                     CCPR2L          equ	27	;# 
+   147     001C                     CCPR2H          equ	28	;# 
+   148     001D                     CCP2CON         equ	29	;# 
+   149     001E                     ADRESH          equ	30	;# 
+   150     001F                     ADCON0          equ	31	;# 
+   151     0081                     OPTION_REG      equ	129	;# 
+   152     0085                     TRISA           equ	133	;# 
+   153     0086                     TRISB           equ	134	;# 
+   154     0087                     TRISC           equ	135	;# 
+   155     0088                     TRISD           equ	136	;# 
+   156     0089                     TRISE           equ	137	;# 
+   157     008C                     PIE1            equ	140	;# 
+   158     008D                     PIE2            equ	141	;# 
+   159     008E                     PCON            equ	142	;# 
+   160     0091                     SSPCON2         equ	145	;# 
+   161     0092                     PR2             equ	146	;# 
+   162     0093                     SSPADD          equ	147	;# 
+   163     0094                     SSPSTAT         equ	148	;# 
+   164     0098                     TXSTA           equ	152	;# 
+   165     0099                     SPBRG           equ	153	;# 
+   166     009C                     CMCON           equ	156	;# 
+   167     009D                     CVRCON          equ	157	;# 
+   168     009E                     ADRESL          equ	158	;# 
+   169     009F                     ADCON1          equ	159	;# 
+   170     010C                     EEDATA          equ	268	;# 
+   171     010D                     EEADR           equ	269	;# 
+   172     010E                     EEDATH          equ	270	;# 
+   173     010F                     EEADRH          equ	271	;# 
+   174     018C                     EECON1          equ	396	;# 
+   175     018D                     EECON2          equ	397	;# 
+   176     0006                     _PORTB          set	6
+   177     0006                     _PORTBbits      set	6
+   178     001A                     _RCREG          set	26
+   179     000C                     _PIR1bits       set	12
+   180     000B                     _INTCONbits     set	11
+   181     0018                     _RCSTAbits      set	24
+   182     0087                     _TRISCbits      set	135
+   183     0086                     _TRISB          set	134
+   184     008C                     _PIE1bits       set	140
+   185     0098                     _TXSTAbits      set	152
+   186     0099                     _SPBRG          set	153
+   187                           
+   188                           	psect	cinit
+   189     0011                     start_initialization:	
+   190                           ; #config settings
+   191                           
+   192     0011                     __initialization:
+   193                           
+   194                           ; Clear objects allocated to COMMON
+   195     0011  01F3               	clrf	__pbssCOMMON& (0+127)
+   196     0012                     end_of_initialization:	
+   197                           ;End of C runtime variable initialization code
+   198                           
+   199     0012                     __end_of__initialization:
+   200     0012  0183               	clrf	3
+   201     0013  120A  118A  2847   	ljmp	_main	;jump to C main() function
+   202                           
+   203                           	psect	bssCOMMON
+   204     0073                     __pbssCOMMON:
+   205     0073                     _received_command:
+   206     0073                     	ds	1
+   207                           
+   208                           	psect	cstackCOMMON
+   209     0070                     __pcstackCOMMON:
+   210     0070                     ?_UART_Init:
+   211     0070                     ?_isr:	
+   212                           ; 1 bytes @ 0x0
+   213                           
+   214     0070                     ?_main:	
+   215                           ; 1 bytes @ 0x0
+   216                           
+   217     0070                     ??_isr:	
+   218                           ; 1 bytes @ 0x0
+   219                           
+   220                           
+   221                           ; 1 bytes @ 0x0
+   222     0070                     	ds	3
+   223     0073                     ??_UART_Init:
+   224     0073                     ??_main:	
+   225                           ; 1 bytes @ 0x3
+   226                           
+   227                           
+   228                           	psect	maintext
+   229     0047                     __pmaintext:	
+   230                           ; 1 bytes @ 0x3
+   231 ;;
+   232 ;;Main: autosize = 0, tempsize = 0, incstack = 0, save=0
+   233 ;;
+   234 ;; *************** function _main *****************
+   235 ;; Defined at:
+   236 ;;		line 113 in file "Bluetooth_Micro.c"
+   237 ;; Parameters:    Size  Location     Type
+   238 ;;		None
+   239 ;; Auto vars:     Size  Location     Type
+   240 ;;		None
+   241 ;; Return value:  Size  Location     Type
+   242 ;;                  1    wreg      void 
+   243 ;; Registers used:
+   244 ;;		status,2, status,0, pclath, cstack
+   245 ;; Tracked objects:
+   246 ;;		On entry : B00/0
+   247 ;;		On exit  : 0/0
+   248 ;;		Unchanged: 0/0
+   249 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   250 ;;      Params:         0       0       0       0       0
+   251 ;;      Locals:         0       0       0       0       0
+   252 ;;      Temps:          0       0       0       0       0
+   253 ;;      Totals:         0       0       0       0       0
+   254 ;;Total ram usage:        0 bytes
+   255 ;; Hardware stack levels required when called: 2
+   256 ;; This function calls:
+   257 ;;		_UART_Init
+   258 ;; This function is called by:
+   259 ;;		Startup code after reset
+   260 ;; This function uses a non-reentrant model
+   261 ;;
+   262                           
+   263     0047                     _main:	
+   264                           ;psect for function _main
+   265                           
+   266     0047                     l611:	
+   267                           ;incstack = 0
+   268                           ; Regs used in _main: [status,2+status,0+pclath+cstack]
+   269                           
+   270     0047  1683               	bsf	3,5	;RP0=1, select bank1
+   271     0048  1303               	bcf	3,6	;RP1=0, select bank1
+   272     0049  0186               	clrf	6	;volatile
+   273     004A                     l613:
+   274     004A  30FF               	movlw	255
+   275     004B  1283               	bcf	3,5	;RP0=0, select bank0
+   276     004C  1303               	bcf	3,6	;RP1=0, select bank0
+   277     004D  0086               	movwf	6	;volatile
+   278     004E                     l615:
+   279     004E  1683               	bsf	3,5	;RP0=1, select bank1
+   280     004F  1303               	bcf	3,6	;RP1=0, select bank1
+   281     0050  1307               	bcf	7,6	;volatile
+   282     0051                     l617:
+   283     0051  1787               	bsf	7,7	;volatile
+   284     0052                     l619:
+   285     0052  120A  118A  205B  120A  118A  	fcall	_UART_Init
+   286     0057                     l46:
+   287     0057                     l47:
+   288     0057  2857               	goto	l46
+   289     0058  120A  118A  280E   	ljmp	start
+   290     005B                     __end_of_main:
+   291                           
+   292                           	psect	text1
+   293     005B                     __ptext1:	
+   294 ;; *************** function _UART_Init *****************
+   295 ;; Defined at:
+   296 ;;		line 38 in file "Bluetooth_Micro.c"
+   297 ;; Parameters:    Size  Location     Type
+   298 ;;		None
+   299 ;; Auto vars:     Size  Location     Type
+   300 ;;		None
+   301 ;; Return value:  Size  Location     Type
+   302 ;;                  1    wreg      void 
+   303 ;; Registers used:
+   304 ;;		None
+   305 ;; Tracked objects:
+   306 ;;		On entry : 0/0
+   307 ;;		On exit  : 0/0
+   308 ;;		Unchanged: 0/0
+   309 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   310 ;;      Params:         0       0       0       0       0
+   311 ;;      Locals:         0       0       0       0       0
+   312 ;;      Temps:          0       0       0       0       0
+   313 ;;      Totals:         0       0       0       0       0
+   314 ;;Total ram usage:        0 bytes
+   315 ;; Hardware stack levels used: 1
+   316 ;; Hardware stack levels required when called: 1
+   317 ;; This function calls:
+   318 ;;		Nothing
+   319 ;; This function is called by:
+   320 ;;		_main
+   321 ;; This function uses a non-reentrant model
+   322 ;;
+   323                           
+   324     005B                     _UART_Init:	
+   325                           ;psect for function _UART_Init
+   326                           
+   327     005B                     l593:	
+   328                           ;incstack = 0
+   329                           ; Regs used in _UART_Init: []
+   330                           
+   331                           
+   332                           ;Bluetooth_Micro.c: 41:         PIR1bits.RCIF = 0;
+   333     005B  3019               	movlw	25
+   334     005C  1683               	bsf	3,5	;RP0=1, select bank1
+   335     005D  1303               	bcf	3,6	;RP1=0, select bank1
+   336     005E  0099               	movwf	25	;volatile
+   337                           
+   338                           ;Bluetooth_Micro.c: 44:         received_command = RCREG;
+   339     005F  1698               	bsf	24,5	;volatile
+   340                           
+   341                           ;Bluetooth_Micro.c: 45: 
+   342     0060  1518               	bsf	24,2	;volatile
+   343                           
+   344                           ;Bluetooth_Micro.c: 46: 
+   345     0061  1218               	bcf	24,4	;volatile
+   346                           
+   347                           ;Bluetooth_Micro.c: 49: 
+   348     0062  1283               	bcf	3,5	;RP0=0, select bank0
+   349     0063  1303               	bcf	3,6	;RP1=0, select bank0
+   350     0064  1798               	bsf	24,7	;volatile
+   351                           
+   352                           ;Bluetooth_Micro.c: 50: 
+   353     0065  1618               	bsf	24,4	;volatile
+   354                           
+   355                           ;Bluetooth_Micro.c: 51:         PORTBbits.RB0 = 1;
+   356     0066  1318               	bcf	24,6	;volatile
+   357                           
+   358                           ;Bluetooth_Micro.c: 54: 
+   359     0067  1683               	bsf	3,5	;RP0=1, select bank1
+   360     0068  1303               	bcf	3,6	;RP1=0, select bank1
+   361     0069  168C               	bsf	12,5	;volatile
+   362                           
+   363                           ;Bluetooth_Micro.c: 55:         switch (received_command) {
+   364     006A  170B               	bsf	11,6	;volatile
+   365                           
+   366                           ;Bluetooth_Micro.c: 56:             case 'R':
+   367     006B  178B               	bsf	11,7	;volatile
+   368     006C                     l27:
+   369     006C  0008               	return
+   370     006D                     __end_of_UART_Init:
+   371                           
+   372                           	psect	text2
+   373     0016                     __ptext2:	
+   374 ;; *************** function _isr *****************
+   375 ;; Defined at:
+   376 ;;		line 64 in file "Bluetooth_Micro.c"
+   377 ;; Parameters:    Size  Location     Type
+   378 ;;		None
+   379 ;; Auto vars:     Size  Location     Type
+   380 ;;		None
+   381 ;; Return value:  Size  Location     Type
+   382 ;;                  1    wreg      void 
+   383 ;; Registers used:
+   384 ;;		wreg, fsr0l, fsr0h, status,2, status,0
+   385 ;; Tracked objects:
+   386 ;;		On entry : 0/0
+   387 ;;		On exit  : 0/0
+   388 ;;		Unchanged: 0/0
+   389 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   390 ;;      Params:         0       0       0       0       0
+   391 ;;      Locals:         0       0       0       0       0
+   392 ;;      Temps:          3       0       0       0       0
+   393 ;;      Totals:         3       0       0       0       0
+   394 ;;Total ram usage:        3 bytes
+   395 ;; Hardware stack levels used: 1
+   396 ;; This function calls:
+   397 ;;		Nothing
+   398 ;; This function is called by:
+   399 ;;		Interrupt level 1
+   400 ;; This function uses a non-reentrant model
+   401 ;;
+   402                           
+   403     0016                     _isr:	
+   404                           ;psect for function _isr
+   405                           
+   406     0016                     i1l595:
+   407                           
+   408                           ;Bluetooth_Micro.c: 66:                 PORTBbits.RB0 = 0;
+   409     0016  1283               	bcf	3,5	;RP0=0, select bank0
+   410     0017  1303               	bcf	3,6	;RP1=0, select bank0
+   411     0018  1E8C               	btfss	12,5	;volatile
+   412     0019  281B               	goto	u1_21
+   413     001A  281C               	goto	u1_20
+   414     001B                     u1_21:
+   415     001B  283E               	goto	i1l41
+   416     001C                     u1_20:
+   417     001C                     i1l597:
+   418                           
+   419                           ;Bluetooth_Micro.c: 68:                 PORTBbits.RB2 = 0;
+   420     001C  128C               	bcf	12,5	;volatile
+   421     001D                     i1l599:
+   422                           
+   423                           ;Bluetooth_Micro.c: 71: 
+   424     001D  081A               	movf	26,w	;volatile
+   425     001E  00F3               	movwf	_received_command	;volatile
+   426     001F                     i1l601:
+   427                           
+   428                           ;Bluetooth_Micro.c: 78:     }
+   429     001F  1406               	bsf	6,0	;volatile
+   430     0020                     i1l603:
+   431                           
+   432                           ;Bluetooth_Micro.c: 79: }
+   433     0020  1486               	bsf	6,1	;volatile
+   434     0021                     i1l605:
+   435                           
+   436                           ;Bluetooth_Micro.c: 80: 
+   437     0021  1506               	bsf	6,2	;volatile
+   438                           
+   439                           ;Bluetooth_Micro.c: 82: 
+   440     0022  282D               	goto	i1l609
+   441     0023                     i1l34:	
+   442                           ;Bluetooth_Micro.c: 83: 
+   443                           
+   444                           
+   445                           ;Bluetooth_Micro.c: 84: 
+   446     0023  1006               	bcf	6,0	;volatile
+   447                           
+   448                           ;Bluetooth_Micro.c: 85: 
+   449     0024  283E               	goto	i1l41
+   450     0025                     i1l36:	
+   451                           ;Bluetooth_Micro.c: 86: void main(void) {
+   452                           
+   453                           
+   454                           ;Bluetooth_Micro.c: 87: 
+   455     0025  1086               	bcf	6,1	;volatile
+   456                           
+   457                           ;Bluetooth_Micro.c: 88: 
+   458     0026  283E               	goto	i1l41
+   459     0027                     i1l37:	
+   460                           ;Bluetooth_Micro.c: 89:     TRISB = 0x00;
+   461                           
+   462                           
+   463                           ;Bluetooth_Micro.c: 90: 
+   464     0027  1106               	bcf	6,2	;volatile
+   465                           
+   466                           ;Bluetooth_Micro.c: 91:     PORTB = 0xFF;
+   467     0028  283E               	goto	i1l41
+   468     0029                     i1l38:	
+   469                           ;Bluetooth_Micro.c: 92: 
+   470                           
+   471                           
+   472                           ;Bluetooth_Micro.c: 93: 
+   473     0029  1006               	bcf	6,0	;volatile
+   474                           
+   475                           ;Bluetooth_Micro.c: 94:     TRISCbits.TRISC6 = 0;
+   476     002A  1086               	bcf	6,1	;volatile
+   477                           
+   478                           ;Bluetooth_Micro.c: 95:     TRISCbits.TRISC7 = 1;
+   479     002B  1106               	bcf	6,2	;volatile
+   480                           
+   481                           ;Bluetooth_Micro.c: 96: 
+   482     002C  283E               	goto	i1l41
+   483     002D                     i1l609:
+   484     002D  0873               	movf	_received_command,w	;volatile
+   485                           
+   486                           ; Switch size 1, requested type "simple"
+   487                           ; Number of cases is 5, Range of values is 48 to 86
+   488                           ; switch strategies available:
+   489                           ; Name         Instructions Cycles
+   490                           ; simple_byte           16     9 (average)
+   491                           ; direct_byte          128    11 (fixed)
+   492                           ; jumptable            263     9 (fixed)
+   493                           ;	Chosen strategy is simple_byte
+   494     002E  3A30               	xorlw	48	; case 48
+   495     002F  1903               	skipnz
+   496     0030  283E               	goto	i1l41
+   497     0031  3A71               	xorlw	113	; case 65
+   498     0032  1903               	skipnz
+   499     0033  2827               	goto	i1l37
+   500     0034  3A13               	xorlw	19	; case 82
+   501     0035  1903               	skipnz
+   502     0036  2823               	goto	i1l34
+   503     0037  3A06               	xorlw	6	; case 84
+   504     0038  1903               	skipnz
+   505     0039  2829               	goto	i1l38
+   506     003A  3A02               	xorlw	2	; case 86
+   507     003B  1903               	skipnz
+   508     003C  2825               	goto	i1l36
+   509     003D  283E               	goto	i1l41
+   510     003E                     i1l41:
+   511     003E  0872               	movf	??_isr+2,w
+   512     003F  008A               	movwf	10
+   513     0040  0871               	movf	??_isr+1,w
+   514     0041  0084               	movwf	4
+   515     0042  0E70               	swapf	??_isr,w
+   516     0043  0083               	movwf	3
+   517     0044  0EFE               	swapf	btemp,f
+   518     0045  0E7E               	swapf	btemp,w
+   519     0046  0009               	retfie
+   520     0047                     __end_of_isr:
+   521     0002                     ___latbits      equ	2
+   522     007E                     btemp           set	126	;btemp
+   523     007E                     wtemp0          set	126
+   524                           
+   525                           	psect	intentry
+   526     0004                     __pintentry:	
+   527                           ;incstack = 0
+   528                           ; Regs used in _isr: [wreg-fsr0h+status,2+status,0]
+   529                           
+   530     0004                     interrupt_function:
+   531     007E                     saved_w         set	btemp
+   532     0004  00FE               	movwf	btemp
+   533     0005  0E03               	swapf	3,w
+   534     0006  00F0               	movwf	??_isr
+   535     0007  0804               	movf	4,w
+   536     0008  00F1               	movwf	??_isr+1
+   537     0009  080A               	movf	10,w
+   538     000A  00F2               	movwf	??_isr+2
+   539     000B  120A  118A  2816   	ljmp	_isr
+   540                           
+   541                           	psect	config
+   542                           
+   543                           ;Config register CONFIG @ 0x2007
+   544                           ;	Oscillator Selection bits
+   545                           ;	FOSC = XT, XT oscillator
+   546                           ;	Watchdog Timer Enable bit
+   547                           ;	WDTE = OFF, WDT disabled
+   548                           ;	Power-up Timer Enable bit
+   549                           ;	PWRTE = ON, PWRT enabled
+   550                           ;	Brown-out Reset Enable bit
+   551                           ;	BOREN = OFF, BOR disabled
+   552                           ;	Low-Voltage (Single-Supply) In-Circuit Serial Programming Enable bit
+   553                           ;	LVP = OFF, RB3 is digital I/O, HV on MCLR must be used for programming
+   554                           ;	Data EEPROM Memory Code Protection bit
+   555                           ;	CPD = OFF, Data EEPROM code protection off
+   556                           ;	Flash Program Memory Write Enable bits
+   557                           ;	WRT = OFF, Write protection off; all program memory may be written to by EECON control
+   558                           ;	In-Circuit Debugger Mode bit
+   559                           ;	DEBUG = 0x1, unprogrammed default
+   560                           ;	Flash Program Memory Code Protection bit
+   561                           ;	CP = OFF, Code protection off
+   562     2007                     	org	8199
+   563     2007  3F31               	dw	16177
+
+Data Sizes:
+    Strings     0
+    Constant    0
+    Data        0
+    BSS         1
+    Persistent  0
+    Stack       0
+
+Auto Spaces:
+    Space          Size  Autos    Used
+    COMMON           14      3       4
+    BANK0            80      0       0
+    BANK1            80      0       0
+    BANK3            96      0       0
+    BANK2            96      0       0
+
+Pointer List with Targets:
+
+    None.
+
+Critical Paths under _main in COMMON
+
+    None.
+
+Critical Paths under _isr in COMMON
+
+    None.
+
+Critical Paths under _main in BANK0
+
+    None.
+
+Critical Paths under _isr in BANK0
+
+    None.
+
+Critical Paths under _main in BANK1
+
+    None.
+
+Critical Paths under _isr in BANK1
+
+    None.
+
+Critical Paths under _main in BANK3
+
+    None.
+
+Critical Paths under _isr in BANK3
+
+    None.
+
+Critical Paths under _main in BANK2
+
+    None.
+
+Critical Paths under _isr in BANK2
+
+    None.
+
+Call Graph Tables:
+
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (0) _main                                                 0     0      0       0
+                          _UART_Init
+ ---------------------------------------------------------------------------------
+ (1) _UART_Init                                            0     0      0       0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 1
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (2) _isr                                                  3     3      0       0
+                                              0 COMMON     3     3      0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 2
+ ---------------------------------------------------------------------------------
+
+ Call Graph Graphs:
+
+ _main (ROOT)
+   _UART_Init
+
+ _isr (ROOT)
+
+Address spaces:
+Name               Size   Autos  Total    Usage
+BITCOMMON           14      0       0      0.0%
+BITBANK0            80      0       0      0.0%
+BITBANK1            80      0       0      0.0%
+BITBANK3            96      0       0      0.0%
+BITBANK2            96      0       0      0.0%
+COMMON              14      3       4     28.6%
+BANK0               80      0       0      0.0%
+BANK1               80      0       0      0.0%
+BANK3               96      0       0      0.0%
+BANK2               96      0       0      0.0%
+STACK                0      0       0      0.0%
+DATA                 0      0       4      0.0%
+
+
+Microchip Technology PIC Macro Assembler V3.00 build 20241204225717 
+Symbol Table                                                                                   Fri Aug 08 17:34:00 2025
+
+                     l27 006C                       l46 0057                       l47 0057  
+                    l611 0047                      l613 004A                      l615 004E  
+                    l617 0051                      l619 0052                      l593 005B  
+                    _isr 0016                      fsr0 0004                     ?_isr 0070  
+                   i1l41 003E                     i1l34 0023                     i1l36 0025  
+                   i1l37 0027                     i1l38 0029                     u1_20 001C  
+                   u1_21 001B                     _main 0047                     btemp 007E  
+                   start 000E                    ??_isr 0070                    ?_main 0070  
+                  i1l601 001F                    i1l603 0020                    i1l605 0021  
+                  i1l609 002D                    i1l595 0016                    i1l597 001C  
+                  i1l599 001D                    _RCREG 001A                    _SPBRG 0099  
+                  _PORTB 0006                    _TRISB 0086                    pclath 000A  
+                  status 0003                    wtemp0 007E          __initialization 0011  
+           __end_of_main 005B                   ??_main 0073        __end_of_UART_Init 006D  
+                 saved_w 007E  __end_of__initialization 0012           __pcstackCOMMON 0070  
+             __pmaintext 0047               __pintentry 0004                  __ptext1 005B  
+                __ptext2 0016     end_of_initialization 0012                _RCSTAbits 0018  
+              _UART_Init 005B                _PORTBbits 0006                _TRISCbits 0087  
+              _TXSTAbits 0098         _received_command 0073               ?_UART_Init 0070  
+    start_initialization 0011              __end_of_isr 0047              __pbssCOMMON 0073  
+              ___latbits 0002              ??_UART_Init 0073        interrupt_function 0004  
+               _PIE1bits 008C                 _PIR1bits 000C               _INTCONbits 000B  
+               intlevel1 0000  
